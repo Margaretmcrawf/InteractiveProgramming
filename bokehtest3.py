@@ -1,22 +1,51 @@
 from bokeh.models import BoxSelectTool, BoxZoomTool, LassoSelectTool, HoverTool, Quad
-from bokeh.plotting import figure, output_file, show, gridplot
+from bokeh.plotting import figure, output_file, show, gridplot, ColumnDataSource
 from bokeh.models.widgets import Dropdown, Panel, Tabs, CheckboxButtonGroup, RadioGroup
 from bokeh.io import output_file, show, vform
 
 # output to static HTML file
 output_file("bokehlinetest.html")
-TOOLS = "box_zoom,box_select,crosshair,resize,reset,hover,tap"
+
+#setting dictionary values for things on the first floor
+source1 = ColumnDataSource(
+        data=dict(
+			roomates = ['Uma and Lauren', 'Margo and Nicole'],
+			gender = ['female', 'female'],
+			top=[2, 2],
+			bottom=[1, 1], 
+			left=[1, 3], 
+			right=[2, 4],
+		)
+	)
+#setting what goes in the hover box (currently dysfunctional)
+hover = HoverTool(
+        tooltips=[
+        	("index", "@index"),
+			("roomates", "@roomates"),
+			("gender", "@gender")
+			]
+		)
+
+TOOLS = "box_zoom,box_select,resize,reset,hover,tap"
 
 p1 = figure(plot_width=400, plot_height=400, tools=TOOLS,title="West Hall First Floor")
-rooms1 = p1.quad(top=[2],bottom=[1], left=[1], right=[2], 
+rooms1 = p1.quad('top','bottom', 'left', 'right',
 					
+					#visual choices for when the room isn't selected, doesn't really work.
+					#also maybe not necessary to click to select rooms, but could
+					#be useful framework for changing color based on which button is selected
 					nonselection_fill_alpha=0.01,
 					nonselection_fill_color=None,
 					nonselection_line_color="firebrick",
 					nonselection_line_alpha=1.0,
 
+					#visual choices for when the room is selected, actually works
 					selection_color="blue",
-					selection_fill_alpha=.5)
+					selection_fill_alpha=.5,
+
+					#source for all of the room data
+					source=source1
+					)
 
 p1.segment(x0=[1, 1, 1, 6], y0=[1, 6, 1, 1], x1=[6, 6, 1, 6],
           y1=[1, 6, 6, 6], color="#F4A582", line_width=3, legend="West Hall")
@@ -49,8 +78,8 @@ tab2 = Panel(child=p2, title="WH2")
 
 
 radio_group = RadioGroup(
-        labels=["Option 1", "Option 2", "Option 3"], active=0)
-dropdown_choices = [("Item 1", "item_1"), ("Item 2", "item_2"), None, ("Item 3", "item_3")]
+        labels=["Gender", "Bedtime", "Some other shit"], active=0)
+dropdown_choices = [("Item 1", "item_1"), ("Item 2", "item_2"), ("Item 3", "item_3")]
 dropdown = Dropdown(label="Dropdown button", type="warning", menu=dropdown_choices)
 
 
