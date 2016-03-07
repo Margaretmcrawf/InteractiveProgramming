@@ -3,9 +3,37 @@ from bokeh.plotting import figure, output_file, show, gridplot, ColumnDataSource
 from bokeh.models.widgets import Dropdown, Panel, Tabs, CheckboxButtonGroup, RadioGroup
 from bokeh.io import output_file, show, vform
 
+#PROJECT OVERVIEW:
+#Create an interactive map of West Hall showing hallway culture via gender distribution, sleeping habit, etc.
+#(If we hear back from STAR, we'll also have data on how people move from year to year, which will be awesome to implement)
+
+#PROGRESS:
+#currently outputs to an html file which has 2 tabs - one for WH1 and one for WH2
+#rooms are currently blue squares, some with click and hover functionality, which is being modified and will be implemented in all once we figure out how to do it properly
+#Also have buttons that are currently disfunctional but are planned to be able to display different color coordinations for each room.
+#Will be initializing Room objects from a .csv file in this folder, but have not implemented yet.
+
+
 # output to static HTML file
 output_file("bokehlinetest.html")
 
+class Room(object):
+	def __init__(self, roomNum, roommates, gender, bedtime, top, bottom, left, right):
+		self.roomNum = roomNum
+		self.roommates = roommates
+		self.gender = gender
+		self.bedtime = bedtime
+		self.top = top
+		self.bottom = bottom
+		self.left = left
+		self.right = right
+
+	def __str__(self):
+		return 'Room Number: %s; Current Inhabitants: %s; Gender: %s; Average Bedtime: %s' %(self.roomNum, self.roommates, self.gender, self.bedtime)
+
+
+# This was our previous Way of setting data (now we'll be using a csv file and pulling data from there to initialize each Room object)
+''' 
 #setting dictionary values for things on the first floor
 source1 = ColumnDataSource(
         data=dict(
@@ -17,6 +45,8 @@ source1 = ColumnDataSource(
 			right=[2, 4],
 		)
 	)
+'''
+
 #setting what goes in the hover box (currently dysfunctional)
 hover = HoverTool(
         tooltips=[
@@ -79,8 +109,9 @@ tab2 = Panel(child=p2, title="WH2")
 
 radio_group = RadioGroup(
         labels=["Gender", "Bedtime", "Some other shit"], active=0)
-dropdown_choices = [("Item 1", "item_1"), ("Item 2", "item_2"), ("Item 3", "item_3")]
-dropdown = Dropdown(label="Dropdown button", type="warning", menu=dropdown_choices)
+
+#dropdown_choices = [("Item 1", "item_1"), ("Item 2", "item_2"), ("Item 3", "item_3")]
+#dropdown = Dropdown(label="Dropdown button", type="warning", menu=dropdown_choices)
 
 
 
