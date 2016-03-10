@@ -132,6 +132,21 @@ class Room(object):
 		colors[3] = hallwaycolors.get(self.halltime,'black')
 		return colors
 
+	def actuallyDrawRoom(self, plot, color, alpha):
+				plot.quad(top=self.top,bottom=self.bottom, left=self.left, right=self.right,
+							nonselection_fill_alpha=0.01,
+							fill_color=color,
+							alpha=alpha,
+							line_color=color,
+							hover_alpha = .7,
+							hover_fill_color=color,
+							nonselection_fill_color=color,
+							nonselection_line_color=color,
+							nonselection_line_alpha=1.0,
+							selection_color=color,
+							selection_fill_alpha=.5)
+
+
 	def drawRoom(self): 
 		if self.gender == 'N/A':
 			gendercolor='grey'
@@ -148,238 +163,72 @@ class Room(object):
 
 		if int(self.roomNum)<200:
 			#draw on first floor
-			rooms1a = a1.quad(top=self.top,bottom=self.bottom, left=self.left, right=self.right,
-								nonselection_fill_alpha=0.01,
-								fill_color=gendercolor,
-								alpha=alpha,
-								line_color=gendercolor,
-								hover_alpha = .7,
-								hover_fill_color=gendercolor,
-								nonselection_fill_color=gendercolor,
-								nonselection_line_color=gendercolor,
-								nonselection_line_alpha=1.0,
-								selection_color=gendercolor,
-								selection_fill_alpha=.5)
-			rooms1b = b1.quad(top=self.top,bottom=self.bottom, left=self.left, right=self.right,
-								nonselection_fill_alpha=0.01,
-								fill_color=bedtimecolor,
-								alpha=alpha,
-								line_color=bedtimecolor,
-								hover_alpha = .7,
-								hover_fill_color=bedtimecolor,
-								nonselection_fill_color=bedtimecolor,
-								nonselection_line_color=bedtimecolor,
-								nonselection_line_alpha=1.0,
-								selection_color=bedtimecolor,
-								selection_fill_alpha=.5)
-			rooms1c = c1.quad(top=self.top,bottom=self.bottom, left=self.left, right=self.right,
-								nonselection_fill_alpha=0.01,
-								fill_color=lightsleepcolor,
-								alpha=alpha,
-								line_color=lightsleepcolor,
-								hover_alpha = .7,
-								hover_fill_color=lightsleepcolor,
-								nonselection_fill_color=lightsleepcolor,
-								nonselection_line_color=lightsleepcolor,
-								nonselection_line_alpha=1.0,
-								selection_color=lightsleepcolor,
-								selection_fill_alpha=.5)
-			rooms1d = d1.quad(top=self.top,bottom=self.bottom, left=self.left, right=self.right,
-								nonselection_fill_alpha=0.01,
-								fill_color=halltimecolor,
-								alpha=alpha,
-								line_color=halltimecolor,
-								hover_alpha = .7,
-								hover_fill_color=halltimecolor,
-								nonselection_fill_color=halltimecolor,
-								nonselection_line_color=halltimecolor,
-								nonselection_line_alpha=1.0,
-								selection_color=halltimecolor,
-								selection_fill_alpha=.5)
+			self.actuallyDrawRoom(a1, gendercolor, alpha)
+			self.actuallyDrawRoom(b1, bedtimecolor, alpha)
+			self.actuallyDrawRoom(c1, lightsleepcolor, alpha)
+			self.actuallyDrawRoom(d1, halltimecolor, alpha)
 
 		elif int(self.roomNum)<300:
 			#draw on second floor
-			rooms2a = a2.quad(top=self.top,bottom=self.bottom, left=self.left, right=self.right,
-								nonselection_fill_alpha=0.01,
-								fill_color=gendercolor,
-								alpha=alpha,
-								line_color=gendercolor,
-								hover_alpha = .7,
-								hover_fill_color=gendercolor,
-								nonselection_fill_color=gendercolor,
-								nonselection_line_color=gendercolor,
-								nonselection_line_alpha=1.0,
-								selection_color=gendercolor,
-								selection_fill_alpha=.5)
-			rooms2b = b2.quad(top=self.top,bottom=self.bottom, left=self.left, right=self.right,
-								nonselection_fill_alpha=0.01,
-								fill_color=bedtimecolor,
-								alpha=alpha,
-								line_color=bedtimecolor,
-								hover_alpha = .7,
-								hover_fill_color=bedtimecolor,
-								nonselection_fill_color=bedtimecolor,
-								nonselection_line_color=bedtimecolor,
-								nonselection_line_alpha=1.0,
-								selection_color=bedtimecolor,
-								selection_fill_alpha=.5)
-			rooms2c = c2.quad(top=self.top,bottom=self.bottom, left=self.left, right=self.right,
-								nonselection_fill_alpha=0.01,
-								fill_color=lightsleepcolor,
-								alpha=alpha,
-								line_color=lightsleepcolor,
-								hover_alpha = .7,
-								hover_fill_color=lightsleepcolor,
-								nonselection_fill_color=lightsleepcolor,
-								nonselection_line_color=lightsleepcolor,
-								nonselection_line_alpha=1.0,
-								selection_color=lightsleepcolor,
-								selection_fill_alpha=.5)
-			rooms2d = d2.quad(top=self.top,bottom=self.bottom, left=self.left, right=self.right,
-								nonselection_fill_alpha=0.01,
-								fill_color=halltimecolor,
-								alpha=alpha,
-								line_color=halltimecolor,
-								hover_alpha = .7,
-								hover_fill_color=halltimecolor,
-								nonselection_fill_color=halltimecolor,
-								nonselection_line_color=halltimecolor,
-								nonselection_line_alpha=1.0,
-								selection_color=halltimecolor,
-								selection_fill_alpha=.5)
+			self.actuallyDrawRoom(a2, gendercolor, alpha)
+			self.actuallyDrawRoom(b2, bedtimecolor, alpha)
+			self.actuallyDrawRoom(c2, lightsleepcolor, alpha)
+			self.actuallyDrawRoom(d2, halltimecolor, alpha)
 		else:
 			#draw on third floor
-			rooms3a = a3.quad(top=self.top,bottom=self.bottom, left=self.left, right=self.right,
-								nonselection_fill_alpha=0.01,
-								fill_color=gendercolor,
-								alpha=alpha,
-								line_color=gendercolor,
-								hover_alpha = .7,
-								hover_fill_color=gendercolor,
-								nonselection_fill_color=gendercolor,
-								nonselection_line_color=gendercolor,
-								nonselection_line_alpha=1.0,
-								selection_color=gendercolor,
-								selection_fill_alpha=.5)
-			rooms3b = b3.quad(top=self.top,bottom=self.bottom, left=self.left, right=self.right,
-								nonselection_fill_alpha=0.01,
-								fill_color=bedtimecolor,
-								alpha=alpha,
-								line_color=bedtimecolor,
-								hover_alpha = .7,
-								hover_fill_color=bedtimecolor,
-								nonselection_fill_color=bedtimecolor,
-								nonselection_line_color=bedtimecolor,
-								nonselection_line_alpha=1.0,
-								selection_color=bedtimecolor,
-								selection_fill_alpha=.5)
-			rooms3c = c3.quad(top=self.top,bottom=self.bottom, left=self.left, right=self.right,
-								nonselection_fill_alpha=0.01,
-								fill_color=lightsleepcolor,
-								alpha=alpha,
-								line_color=lightsleepcolor,
-								hover_alpha = .7,
-								hover_fill_color=lightsleepcolor,
-								nonselection_fill_color=lightsleepcolor,
-								nonselection_line_color=lightsleepcolor,
-								nonselection_line_alpha=1.0,
-								selection_color=lightsleepcolor,
-								selection_fill_alpha=.5)
-			rooms3d = d3.quad(top=self.top,bottom=self.bottom, left=self.left, right=self.right,
-								nonselection_fill_alpha=0.01,
-								fill_color=halltimecolor,
-								alpha=alpha,
-								line_color=halltimecolor,
-								hover_alpha = .7,
-								hover_fill_color=halltimecolor,
-								nonselection_fill_color=halltimecolor,
-								nonselection_line_color=halltimecolor,
-								nonselection_line_alpha=1.0,
-								selection_color=halltimecolor,
-								selection_fill_alpha=.5)
-
+			self.actuallyDrawRoom(a3, gendercolor, alpha)
+			self.actuallyDrawRoom(b3, bedtimecolor, alpha)
+			self.actuallyDrawRoom(c3, lightsleepcolor, alpha)
+			self.actuallyDrawRoom(d3, halltimecolor, alpha)
 TOOLS = "box_zoom,box_select,resize,reset,tap"
+
+#creates the map in the shape of west hall for the given plot.
+def make_mapshape(grid):
+	grid.xgrid.grid_line_color = None
+	grid.ygrid.grid_line_color = None
+	grid.segment(x0=[0, 4, 4, 7, 7, 11, 11, 7, 7, 4, 4, 0], y0=[13, 13, 12, 12, 13, 13, 10, 10, 1, 1, 10, 10], 
+		  x1=[4, 4, 7, 7, 11, 11, 7, 7, 4, 4, 0, 0], y1=[13, 12, 12, 13, 13, 10, 10, 1, 1, 10, 10, 13], color="#F4A582", line_width=3)
 
 #GENDER 
 #draws first floor of WH
 a1 = figure(plot_width=400, plot_height=400, tools=TOOLS,title="West Hall First Floor")
-a1.xgrid.grid_line_color = None
-a1.ygrid.grid_line_color = None
-a1.segment(x0=[0, 4, 4, 7, 7, 11, 11, 7, 7, 4, 4, 0], y0=[13, 13, 12, 12, 13, 13, 10, 10, 1, 1, 10, 10], 
-		  x1=[4, 4, 7, 7, 11, 11, 7, 7, 4, 4, 0, 0], y1=[13, 12, 12, 13, 13, 10, 10, 1, 1, 10, 10, 13], color="#F4A582", line_width=3)
-#draws second floor of WH
+make_mapshape(a1)
+#draws second floor
 a2 = figure(plot_width=400, plot_height=400, tools=TOOLS,title="West Hall Second Floor")
-a2.xgrid.grid_line_color = None
-a2.ygrid.grid_line_color = None
-a2.segment(x0=[0, 4, 4, 7, 7, 11, 11, 7, 7, 4, 4, 0], y0=[13, 13, 12, 12, 13, 13, 10, 10, 1, 1, 10, 10], 
-		  x1=[4, 4, 7, 7, 11, 11, 7, 7, 4, 4, 0, 0], y1=[13, 12, 12, 13, 13, 10, 10, 1, 1, 10, 10, 13], color="#F4A582", line_width=3)
-#draws third floor of WH
+make_mapshape(a2)
+#draws third floor
 a3 = figure(plot_width=400, plot_height=400, tools=TOOLS,title="West Hall Third Floor")
-a3.xgrid.grid_line_color = None
-a3.ygrid.grid_line_color = None
-a3.segment(x0=[0, 4, 4, 7, 7, 11, 11, 7, 7, 4, 4, 0], y0=[13, 13, 12, 12, 13, 13, 10, 10, 1, 1, 10, 10], 
-		  x1=[4, 4, 7, 7, 11, 11, 7, 7, 4, 4, 0, 0], y1=[13, 12, 12, 13, 13, 10, 10, 1, 1, 10, 10, 13], color="#F4A582", line_width=3)
-
+make_mapshape(a3)
 #BEDTIME
 #draws first floor of WH
 b1 = figure(plot_width=400, plot_height=400, tools=TOOLS,title="West Hall First Floor")
-b1.xgrid.grid_line_color = None
-b1.ygrid.grid_line_color = None
-b1.segment(x0=[0, 4, 4, 7, 7, 11, 11, 7, 7, 4, 4, 0], y0=[13, 13, 12, 12, 13, 13, 10, 10, 1, 1, 10, 10], 
-		  x1=[4, 4, 7, 7, 11, 11, 7, 7, 4, 4, 0, 0], y1=[13, 12, 12, 13, 13, 10, 10, 1, 1, 10, 10, 13], color="#F4A582", line_width=3)
+make_mapshape(b1)
 #draws second floor of WH
 b2 = figure(plot_width=400, plot_height=400, tools=TOOLS,title="West Hall Second Floor")
-b2.xgrid.grid_line_color = None
-b2.ygrid.grid_line_color = None
-b2.segment(x0=[0, 4, 4, 7, 7, 11, 11, 7, 7, 4, 4, 0], y0=[13, 13, 12, 12, 13, 13, 10, 10, 1, 1, 10, 10], 
-		  x1=[4, 4, 7, 7, 11, 11, 7, 7, 4, 4, 0, 0], y1=[13, 12, 12, 13, 13, 10, 10, 1, 1, 10, 10, 13], color="#F4A582", line_width=3)
+make_mapshape(b2)
 #draws third floor of WH
 b3 = figure(plot_width=400, plot_height=400, tools=TOOLS,title="West Hall Third Floor")
-b3.xgrid.grid_line_color = None
-b3.ygrid.grid_line_color = None
-b3.segment(x0=[0, 4, 4, 7, 7, 11, 11, 7, 7, 4, 4, 0], y0=[13, 13, 12, 12, 13, 13, 10, 10, 1, 1, 10, 10], 
-		  x1=[4, 4, 7, 7, 11, 11, 7, 7, 4, 4, 0, 0], y1=[13, 12, 12, 13, 13, 10, 10, 1, 1, 10, 10, 13], color="#F4A582", line_width=3)
-
+make_mapshape(b3)
 #LIGHT SLEEPER
 #draws first floor of WH
 c1 = figure(plot_width=400, plot_height=400, tools=TOOLS,title="West Hall First Floor")
-c1.xgrid.grid_line_color = None
-c1.ygrid.grid_line_color = None
-c1.segment(x0=[0, 4, 4, 7, 7, 11, 11, 7, 7, 4, 4, 0], y0=[13, 13, 12, 12, 13, 13, 10, 10, 1, 1, 10, 10], 
-		  x1=[4, 4, 7, 7, 11, 11, 7, 7, 4, 4, 0, 0], y1=[13, 12, 12, 13, 13, 10, 10, 1, 1, 10, 10, 13], color="#F4A582", line_width=3)
+make_mapshape(c1)
 #draws second floor of WH
 c2 = figure(plot_width=400, plot_height=400, tools=TOOLS,title="West Hall Second Floor")
-c2.xgrid.grid_line_color = None
-c2.ygrid.grid_line_color = None
-c2.segment(x0=[0, 4, 4, 7, 7, 11, 11, 7, 7, 4, 4, 0], y0=[13, 13, 12, 12, 13, 13, 10, 10, 1, 1, 10, 10], 
-		  x1=[4, 4, 7, 7, 11, 11, 7, 7, 4, 4, 0, 0], y1=[13, 12, 12, 13, 13, 10, 10, 1, 1, 10, 10, 13], color="#F4A582", line_width=3)
+make_mapshape(c2)	  
 #draws third floor of WH
 c3 = figure(plot_width=400, plot_height=400, tools=TOOLS,title="West Hall Third Floor")
-c3.xgrid.grid_line_color = None
-c3.ygrid.grid_line_color = None
-c3.segment(x0=[0, 4, 4, 7, 7, 11, 11, 7, 7, 4, 4, 0], y0=[13, 13, 12, 12, 13, 13, 10, 10, 1, 1, 10, 10], 
-		  x1=[4, 4, 7, 7, 11, 11, 7, 7, 4, 4, 0, 0], y1=[13, 12, 12, 13, 13, 10, 10, 1, 1, 10, 10, 13], color="#F4A582", line_width=3)
-
+make_mapshape(c3)
 #HALLWAY TIME
 #draws first floor of WH
 d1 = figure(plot_width=400, plot_height=400, tools=TOOLS,title="West Hall First Floor")
-d1.xgrid.grid_line_color = None
-d1.ygrid.grid_line_color = None
-d1.segment(x0=[0, 4, 4, 7, 7, 11, 11, 7, 7, 4, 4, 0], y0=[13, 13, 12, 12, 13, 13, 10, 10, 1, 1, 10, 10], 
-		  x1=[4, 4, 7, 7, 11, 11, 7, 7, 4, 4, 0, 0], y1=[13, 12, 12, 13, 13, 10, 10, 1, 1, 10, 10, 13], color="#F4A582", line_width=3)
+make_mapshape(d1)
 #draws second floor of WH
 d2 = figure(plot_width=400, plot_height=400, tools=TOOLS,title="West Hall Second Floor")
-d2.xgrid.grid_line_color = None
-d2.ygrid.grid_line_color = None
-d2.segment(x0=[0, 4, 4, 7, 7, 11, 11, 7, 7, 4, 4, 0], y0=[13, 13, 12, 12, 13, 13, 10, 10, 1, 1, 10, 10], 
-		  x1=[4, 4, 7, 7, 11, 11, 7, 7, 4, 4, 0, 0], y1=[13, 12, 12, 13, 13, 10, 10, 1, 1, 10, 10, 13], color="#F4A582", line_width=3)
+make_mapshape(d2)
 #draws third floor of WH
 d3 = figure(plot_width=400, plot_height=400, tools=TOOLS,title="West Hall Third Floor")
-d3.xgrid.grid_line_color = None
-d3.ygrid.grid_line_color = None
-d3.segment(x0=[0, 4, 4, 7, 7, 11, 11, 7, 7, 4, 4, 0], y0=[13, 13, 12, 12, 13, 13, 10, 10, 1, 1, 10, 10], 
-		  x1=[4, 4, 7, 7, 11, 11, 7, 7, 4, 4, 0, 0], y1=[13, 12, 12, 13, 13, 10, 10, 1, 1, 10, 10, 13], color="#F4A582", line_width=3)
-
+make_mapshape(d3)
 #Pull data from csv file and create Room objects from it!
 with open('WH_Freshmen.csv') as csvfile:
 	freshmen_data = csv.reader(csvfile, delimiter=',', quotechar='\"')
