@@ -26,9 +26,8 @@ import csv
 output_file("WH_Firstyears.html")
 
 class Room(object):
-	def __init__(self, roomNum='000', roommates='[Roommate Names Here]', gender='[Some Gender Here]', bedtime=0, lightsleep=0, halltime=0, top=1, bottom=0, left=0, right=1):
+	def __init__(self, roomNum='000', gender='[Some Gender Here]', bedtime=0, lightsleep=0, halltime=0, top=1, bottom=0, left=0, right=1):
 		self.roomNum = roomNum
-		self.roommates = roommates
 		self.gender = gender
 		self.bedtime = bedtime
 		self.lightsleep = lightsleep
@@ -39,7 +38,7 @@ class Room(object):
 		self.right = right
 
 	def __str__(self):
-		return 'Room Number: %s / Current Inhabitants: %s / Gender: %s / Average Bedtime: %s' %(self.roomNum, self.roommates, self.gender, self.bedtime)
+		return 'Room Number: %s / Gender: %s / Average Bedtime: %s' %(self.roomNum, self.gender, self.bedtime)
 
 	def findCoordinates(self): #defines positions for rooms
 		coordinates = [1,0,0,1] #top, bottom, left, right (respectively)
@@ -306,17 +305,17 @@ TOOLS = "box_zoom,box_select,resize,reset,hover,tap"
 a1 = figure(plot_width=400, plot_height=400, tools=TOOLS,title="West Hall First Floor")
 a1.segment(x0=[0, 4, 4, 7, 7, 11, 11, 7, 7, 4, 4, 0], y0=[13, 13, 12, 12, 13, 13, 10, 10, 1, 1, 10, 10], 
 		  x1=[4, 4, 7, 7, 11, 11, 7, 7, 4, 4, 0, 0], y1=[13, 12, 12, 13, 13, 10, 10, 1, 1, 10, 10, 13], color="#F4A582", line_width=3)
-a1.select_one(HoverTool).tooltips = [('Room Number','@roomNum'),('Inhabitants','@roommates')]
+a1.select_one(HoverTool).tooltips = [('Room Number','@roomNum'),('Gender','@gender')]
 #draws second floor of WH
 a2 = figure(plot_width=400, plot_height=400, tools=TOOLS,title="West Hall Second Floor")
 a2.segment(x0=[0, 4, 4, 7, 7, 11, 11, 7, 7, 4, 4, 0], y0=[13, 13, 12, 12, 13, 13, 10, 10, 1, 1, 10, 10], 
 		  x1=[4, 4, 7, 7, 11, 11, 7, 7, 4, 4, 0, 0], y1=[13, 12, 12, 13, 13, 10, 10, 1, 1, 10, 10, 13], color="#F4A582", line_width=3)
-a2.select_one(HoverTool).tooltips = [('Room Number','@roomNum'),('Inhabitants','@roommates')]
+a2.select_one(HoverTool).tooltips = [('Room Number','@roomNum'),('Gender','@gender')]
 #draws third floor of WH
 a3 = figure(plot_width=400, plot_height=400, tools=TOOLS,title="West Hall Third Floor")
 a3.segment(x0=[0, 4, 4, 7, 7, 11, 11, 7, 7, 4, 4, 0], y0=[13, 13, 12, 12, 13, 13, 10, 10, 1, 1, 10, 10], 
 		  x1=[4, 4, 7, 7, 11, 11, 7, 7, 4, 4, 0, 0], y1=[13, 12, 12, 13, 13, 10, 10, 1, 1, 10, 10, 13], color="#F4A582", line_width=3)
-a3.select_one(HoverTool).tooltips = [('Room Number','@roomNum'),('Inhabitants','@roommates')]
+a3.select_one(HoverTool).tooltips = [('Room Number','@roomNum'),('Gender','@gender')]
 
 a = hplot(a1, a2, a3)
 
@@ -325,17 +324,17 @@ a = hplot(a1, a2, a3)
 b1 = figure(plot_width=400, plot_height=400, tools=TOOLS,title="West Hall First Floor")
 b1.segment(x0=[0, 4, 4, 7, 7, 11, 11, 7, 7, 4, 4, 0], y0=[13, 13, 12, 12, 13, 13, 10, 10, 1, 1, 10, 10], 
 		  x1=[4, 4, 7, 7, 11, 11, 7, 7, 4, 4, 0, 0], y1=[13, 12, 12, 13, 13, 10, 10, 1, 1, 10, 10, 13], color="#F4A582", line_width=3)
-b1.select_one(HoverTool).tooltips = [('Room Number','@roomNum'),('Inhabitants','@roommates')]
+b1.select_one(HoverTool).tooltips = [('Room Number','@roomNum'),('Average Bedtime','@bedtime')]
 #draws second floor of WH
 b2 = figure(plot_width=400, plot_height=400, tools=TOOLS,title="West Hall Second Floor")
 b2.segment(x0=[0, 4, 4, 7, 7, 11, 11, 7, 7, 4, 4, 0], y0=[13, 13, 12, 12, 13, 13, 10, 10, 1, 1, 10, 10], 
 		  x1=[4, 4, 7, 7, 11, 11, 7, 7, 4, 4, 0, 0], y1=[13, 12, 12, 13, 13, 10, 10, 1, 1, 10, 10, 13], color="#F4A582", line_width=3)
-b2.select_one(HoverTool).tooltips = [('Room Number','@roomNum'),('Inhabitants','@roommates')]
+b2.select_one(HoverTool).tooltips = [('Room Number','@roomNum'),('Average Bedtime','@bedtime')]
 #draws third floor of WH
 b3 = figure(plot_width=400, plot_height=400, tools=TOOLS,title="West Hall Third Floor")
 b3.segment(x0=[0, 4, 4, 7, 7, 11, 11, 7, 7, 4, 4, 0], y0=[13, 13, 12, 12, 13, 13, 10, 10, 1, 1, 10, 10], 
 		  x1=[4, 4, 7, 7, 11, 11, 7, 7, 4, 4, 0, 0], y1=[13, 12, 12, 13, 13, 10, 10, 1, 1, 10, 10, 13], color="#F4A582", line_width=3)
-b3.select_one(HoverTool).tooltips = [('Room Number','@roomNum'),('Inhabitants','@roommates')]
+b3.select_one(HoverTool).tooltips = [('Room Number','@roomNum'),('Average Bedtime','@bedtime')]
 
 b = hplot(b1, b2, b3)
 
@@ -344,17 +343,17 @@ b = hplot(b1, b2, b3)
 c1 = figure(plot_width=400, plot_height=400, tools=TOOLS,title="West Hall First Floor")
 c1.segment(x0=[0, 4, 4, 7, 7, 11, 11, 7, 7, 4, 4, 0], y0=[13, 13, 12, 12, 13, 13, 10, 10, 1, 1, 10, 10], 
 		  x1=[4, 4, 7, 7, 11, 11, 7, 7, 4, 4, 0, 0], y1=[13, 12, 12, 13, 13, 10, 10, 1, 1, 10, 10, 13], color="#F4A582", line_width=3)
-c1.select_one(HoverTool).tooltips = [('Room Number','@roomNum'),('Inhabitants','@roommates')]
+c1.select_one(HoverTool).tooltips = [('Room Number','@roomNum'),('Heaviness of Sleep','@lightsleep')]
 #draws second floor of WH
 c2 = figure(plot_width=400, plot_height=400, tools=TOOLS,title="West Hall Second Floor")
 c2.segment(x0=[0, 4, 4, 7, 7, 11, 11, 7, 7, 4, 4, 0], y0=[13, 13, 12, 12, 13, 13, 10, 10, 1, 1, 10, 10], 
 		  x1=[4, 4, 7, 7, 11, 11, 7, 7, 4, 4, 0, 0], y1=[13, 12, 12, 13, 13, 10, 10, 1, 1, 10, 10, 13], color="#F4A582", line_width=3)
-c2.select_one(HoverTool).tooltips = [('Room Number','@roomNum'),('Inhabitants','@roommates')]
+c2.select_one(HoverTool).tooltips = [('Room Number','@roomNum'),('Heaviness of Sleep','@lightsleep')]
 #draws third floor of WH
 c3 = figure(plot_width=400, plot_height=400, tools=TOOLS,title="West Hall Third Floor")
 c3.segment(x0=[0, 4, 4, 7, 7, 11, 11, 7, 7, 4, 4, 0], y0=[13, 13, 12, 12, 13, 13, 10, 10, 1, 1, 10, 10], 
 		  x1=[4, 4, 7, 7, 11, 11, 7, 7, 4, 4, 0, 0], y1=[13, 12, 12, 13, 13, 10, 10, 1, 1, 10, 10, 13], color="#F4A582", line_width=3)
-c3.select_one(HoverTool).tooltips = [('Room Number','@roomNum'),('Inhabitants','@roommates')]
+c3.select_one(HoverTool).tooltips = [('Room Number','@roomNum'),('Heaviness of Sleep','@lightsleep')]
 
 c = hplot(c1, c2, c3)
 
@@ -363,17 +362,17 @@ c = hplot(c1, c2, c3)
 d1 = figure(plot_width=400, plot_height=400, tools=TOOLS,title="West Hall First Floor")
 d1.segment(x0=[0, 4, 4, 7, 7, 11, 11, 7, 7, 4, 4, 0], y0=[13, 13, 12, 12, 13, 13, 10, 10, 1, 1, 10, 10], 
 		  x1=[4, 4, 7, 7, 11, 11, 7, 7, 4, 4, 0, 0], y1=[13, 12, 12, 13, 13, 10, 10, 1, 1, 10, 10, 13], color="#F4A582", line_width=3)
-d1.select_one(HoverTool).tooltips = [('Room Number','@roomNum'),('Inhabitants','@roommates')]
+d1.select_one(HoverTool).tooltips = [('Room Number','@roomNum'),('Time in Hallway','@halltime')]
 #draws second floor of WH
 d2 = figure(plot_width=400, plot_height=400, tools=TOOLS,title="West Hall Second Floor")
 d2.segment(x0=[0, 4, 4, 7, 7, 11, 11, 7, 7, 4, 4, 0], y0=[13, 13, 12, 12, 13, 13, 10, 10, 1, 1, 10, 10], 
 		  x1=[4, 4, 7, 7, 11, 11, 7, 7, 4, 4, 0, 0], y1=[13, 12, 12, 13, 13, 10, 10, 1, 1, 10, 10, 13], color="#F4A582", line_width=3)
-d2.select_one(HoverTool).tooltips = [('Room Number','@roomNum'),('Inhabitants','@roommates')]
+d2.select_one(HoverTool).tooltips = [('Room Number','@roomNum'),('Time in Hallway','@halltime')]
 #draws third floor of WH
 d3 = figure(plot_width=400, plot_height=400, tools=TOOLS,title="West Hall Third Floor")
 d3.segment(x0=[0, 4, 4, 7, 7, 11, 11, 7, 7, 4, 4, 0], y0=[13, 13, 12, 12, 13, 13, 10, 10, 1, 1, 10, 10], 
 		  x1=[4, 4, 7, 7, 11, 11, 7, 7, 4, 4, 0, 0], y1=[13, 12, 12, 13, 13, 10, 10, 1, 1, 10, 10, 13], color="#F4A582", line_width=3)
-d3.select_one(HoverTool).tooltips = [('Room Number','@roomNum'),('Inhabitants','@roommates')]
+d3.select_one(HoverTool).tooltips = [('Room Number','@roomNum'),('Time in Hallway','@halltime')]
 
 d = hplot(d1, d2, d3)
 
