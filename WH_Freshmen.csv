@@ -1,32 +1,32 @@
-101,Kristyn,Female,,,,,,,,
+101,Kristyn,Female,0,0,0,,,,,
 102,Gwyn and Regina,Female,1,2,3,,,,,
 103,Emily Y. and Jingyi,Female,12,2.5,2,,"J,E","12,12","3,2","1,3"
-104,Andrew P. and Sam,Male,1,2,1,,,,,
-105,Bryan and Nathan,Male,,,,,,,,
+104,Andrew P. and Sam,Male,1,2,2,,"S,A","1,1","2,2","1,3"
+105,Bryan and Nathan,Male,1,2,2,,,,,
 106,Emma and Erica,Female,,,,,,,,
 107,Alex S. and David,Male,,,,,,,,
 124,Anna,Female,,,,,,,,
-126,Diego and Sean,Male,,,,,,,,
+126,Diego and Sean,Male,11,2,4,,,,,
 127,Annie and Tehya,Female,11,2,3,,,,,
-128,Louise and Katya,Female,1,2.5,2,,"L,K","11,3","3,2","1,3"
-129,Carl and Kevin G.,Male,,,,,,,,
-130,Danny and Will,Male,,,,,,,,
+128,Louise and Katya,Nonbinary/Female,1,2.5,2,,"L,K","11,3","3,2","1,3"
+129,Carl and Kevin G.,Male,2,2,2,,,,,
+130,Danny and Will,Male,12,2,2,,,,,
 131,Alex H. and Leon,Male,,,,,,,,
-201,Eric and Max S.,Male,1,3,1,,,,,
-202,Dhash and Taylor,Male,,,,,,,,
-203,Jamie and Jeremy,Male,,,,,,,,
+201,Eric and Max S.,Male,1,2.5,1,,"M,E","1,1","3,2","1,1"
+202,Dhash and Taylor,Male,3,2,2,,,,,
+203,Jamie and Jeremy,Male,2,2,3,,,,,
 204,Margo and Nicole,Female,1,3,1,,,,,
-205,Lauren G. and Uma,Female,2,3,2,,,,,
+205,Lauren G. and Uma,Female,2,2.5,2,,"L,U","2,2","3,2","2,2"
 207,Claire and Liv,Female,12,1,3,,,,,
-209,John Moreland and Joseph,Male,,,,,,,,
-210,Jared and Max D.,Male,,,,,,,,
-211,Katie and Serena,Female,1,3,2,,,,,
-212,Ariana and Emily K.,Female,12,2,4,,,,,
-213,Linnea and Mary,Female,1,2,3,,,,,
-214,John Mathai and Justin,Male,,,,,,,,
-215,Daniel D. and Steven,Male,4,2,,,,,,
-218,Annabel,Female,,,,,,,,
-220,Keenan,Male,,,,,,,,
+209,John Moreland and Joseph,Male,12,3,1,,,,,
+210,Jared and Max D.,Male,1,2,1,,,,,
+211,Katie and Serena,Female,2.5,3,2.5,,"S,K","1,4","3,3","2,3"
+212,Ariana and Emily K.,Female,12,2,3.5,,"A,E","12,12","2,2","4,3"
+213,Linnea and Mary,Female,12.5,2,2,,"M,L","1,12","2,2","3,1"
+214,John Mathai and Justin,Male,12,3,1,,,,,
+215,Daniel D. and Steven,Male,2.5,2,2,,"S,D","4,1","2,2","0,2"
+218,Annabel,Female,0,0,0,,,,,
+220,Keenan,Male,0,0,0,,,,,
 223,Harper and Paige,Female,11,2,,,,,,
 224,Charlie and Rachel,Female,1,2,2,,,,,
 225,Apurva and Sara,Female,1,2,3,,,,,
@@ -35,11 +35,11 @@
 228,Mica and Min,Female,11,2,3,,,,,
 229,Lydia and Kim,Female,12.5,2.5,4,,"K,L","1,12","2,3","3,5"
 230,Andrew and Hunter,Male,,,,,,,,
-231,Bill and Isaac,Male,1,2,3,,,,,
+231,Bill and Isaac,Male,1.5,2,2.5,,"I,B","1,2","2,2","3,2"
 301,Chloe and Kaitlyn,Female,11.5,1.5,3,,"K,C","12, 11","2,1","0,3"
-302,Audrey and Izzy,Female,1,2,,,,,,
-303,Ian and Kevin,Male,,,,,,,,
+302,Audrey and Izzy,Female,12.5,2.5,1,,"A,I","1,12","2,3","0,1"
+303,Ian and Kevin Z.,Male,2,2,3,,,,,
 304,Cedric and Duncan,Male,,,,,,,,
-305,Lauren P. and March,Female,2,2,4,,,,,
+305,Lauren P. and March,Female,1.5,2.5,4,,"L,M","2,1","2,3","4,4"
 306,Coleman and Max W.,Male,,,,,,,,
 307,Jonathan and Sung,Male,12,2.5,1.5,,"S,J","1,11","3,2","2,1"
