@@ -129,7 +129,7 @@ class Room(object):
 		colors[2] = lightsleepcolors.get(self.lightsleep,'black')
 
 		#hallway time
-		hallwaycolors = {'1':'#CEF1FO','1.5':'#B6EBE9','2':'#9EE4E2','2.5':'#86DEDB','3':'#6DD7D3','3.5':'#55D0CC','4':'#3DCAC5','4.5':'#25CBE','5':'#0DBDB7'}
+		hallwaycolors = {'1':'#CEF1F0','1.5':'#B6EBE9','2':'#9EE4E2','2.5':'#86DEDB','3':'#6DD7D3','3.5':'#55D0CC','4':'#3DCAC5','4.5':'#25CBE','5':'#0DBDB7'}
 		colors[3] = hallwaycolors.get(self.halltime,'black')
 		return colors
 
