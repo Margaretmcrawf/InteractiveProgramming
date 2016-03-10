@@ -133,7 +133,7 @@ class Room(object):
 		colors[3] = hallwaycolors.get(self.halltime,'firebrick')
 		return colors
 
-	def drawRoom(self): #Now with Olin colors! heyyyyyyyyyooooooo
+	def drawRoom(self): 
 		if self.gender == 'N/A':
 			gendercolor='grey'
 			bedtimecolor='grey'
@@ -163,15 +163,15 @@ class Room(object):
 								selection_fill_alpha=.5)
 			rooms1b = b1.quad(top=self.top,bottom=self.bottom, left=self.left, right=self.right,
 								nonselection_fill_alpha=0.01,
-								fill_color=gendercolor,
+								fill_color=bedtimecolor,
 								alpha=alpha,
-								line_color=gendercolor,
+								line_color=bedtimecolor,
 								hover_alpha = .7,
-								hover_fill_color=gendercolor,
-								nonselection_fill_color=gendercolor,
-								nonselection_line_color=gendercolor,
+								hover_fill_color=bedtimecolor,
+								nonselection_fill_color=bedtimecolor,
+								nonselection_line_color=bedtimecolor,
 								nonselection_line_alpha=1.0,
-								selection_color=gendercolor,
+								selection_color=bedtimecolor,
 								selection_fill_alpha=.5)
 			rooms1c = c1.quad(top=self.top,bottom=self.bottom, left=self.left, right=self.right,
 								nonselection_fill_alpha=0.01,
