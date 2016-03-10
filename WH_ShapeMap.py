@@ -1,5 +1,5 @@
 from bokeh.models import BoxSelectTool, BoxZoomTool, LassoSelectTool, HoverTool, Quad
-from bokeh.plotting import figure, output_file, show, gridplot, ColumnDataSource
+from bokeh.plotting import figure, output_file, show, gridplot, ColumnDataSource, output_server
 from bokeh.models.widgets import Dropdown, Panel, Tabs, CheckboxButtonGroup, RadioGroup
 from bokeh.io import output_file, show, vform, save
 import csv
@@ -11,6 +11,7 @@ import csv
 #PROGRESS:
 #currently outputs to an html file which has 3 tabs - WH1, WH2, and WH3
 #rooms are currently blue squares, have hover functionality with correct labels but no data
+#rooms are 1 unit squares with an x position between 0 and 11 and a y position between 1 and 13.
 #Also have buttons that are currently nonfunctional but are planned to be able to display different color coordinations for each room.
 #Initializes and draws all rooms in correct places from a .csv file with data from survey sent to first years.
 
@@ -21,6 +22,7 @@ import csv
 #Make buttons functional
 	#figure out how to make buttons active
 	#make metric for color changing and coordination
+	#bokeh server things
 
 
 # output to static HTML file
@@ -162,26 +164,25 @@ class Room(object):
 								selection_color=color,
 								selection_fill_alpha=.5)
 
-
 TOOLS = "box_zoom,box_select,resize,reset,hover,tap"
 
 #draws first floor of WH
 p1 = figure(plot_width=400, plot_height=400, tools=TOOLS,title="West Hall First Floor")
-tab1 =  Panel(child=p1, title="WH1")
+
 p1.segment(x0=[0, 4, 4, 7, 7, 11, 11, 7, 7, 4, 4, 0], y0=[13, 13, 12, 12, 13, 13, 10, 10, 1, 1, 10, 10], 
-		  x1=[4, 4, 7, 7, 11, 11, 7, 7, 4, 4, 0, 0], y1=[13, 12, 12, 13, 13, 10, 10, 1, 1, 10, 10, 13], color="#F4A582", line_width=3)
+		  x1=[4, 4, 7, 7, 11, 11, 7, 7, 4, 4, 0, 0], y1=[13, 12, 12, 13, 13, 10, 10, 1, 1, 10, 10, 13], color="green", line_width=3)
 p1.select_one(HoverTool).tooltips = [('Room Number','@roomNum'),('Inhabitants','@roommates')]
 
 #draws second floor of WH
 p2 = figure(plot_width=400, plot_height=400, tools=TOOLS,title="West Hall Second Floor")
-tab2 = Panel(child=p2, title="WH2")
+
 p2.segment(x0=[0, 4, 4, 7, 7, 11, 11, 7, 7, 4, 4, 0], y0=[13, 13, 12, 12, 13, 13, 10, 10, 1, 1, 10, 10], 
 		  x1=[4, 4, 7, 7, 11, 11, 7, 7, 4, 4, 0, 0], y1=[13, 12, 12, 13, 13, 10, 10, 1, 1, 10, 10, 13], color="#F4A582", line_width=3)
 p2.select_one(HoverTool).tooltips = [('Room Number','@roomNum'),('Inhabitants','@roommates')]
 
 #draws third floor of WH
 p3 = figure(plot_width=400, plot_height=400, tools=TOOLS,title="West Hall Third Floor")
-tab3 = Panel(child=p3, title="WH3")
+
 p3.segment(x0=[0, 4, 4, 7, 7, 11, 11, 7, 7, 4, 4, 0], y0=[13, 13, 12, 12, 13, 13, 10, 10, 1, 1, 10, 10], 
 		  x1=[4, 4, 7, 7, 11, 11, 7, 7, 4, 4, 0, 0], y1=[13, 12, 12, 13, 13, 10, 10, 1, 1, 10, 10, 13], color="#F4A582", line_width=3)
 p3.select_one(HoverTool).tooltips = [('Room Number','@roomNum'),('Inhabitants','@roommates')]
@@ -196,7 +197,9 @@ with open('WH_Freshmen.csv') as csvfile:
 		roomA.roomNum = row[0]
 		roomA.roomates = row[1] #not working for some reason?
 		roomA.gender = row[2]
+		roomA.gendercolor = "green"
 		roomA.bedtime = row[3]
+		roomA.bedtimecolor = "yellow"
 		roomA.lightsleep = row[4]
 		roomA.halltime = row[5]
 		coordinates = roomA.findCoordinates()
@@ -210,7 +213,7 @@ with open('WH_Freshmen.csv') as csvfile:
 dropdown_choices = [("Gender", "gender"), ("Bedtime", "bedtime"), ("Light Sleeper", "lightsleep"), ("Time in Hallway", "halltime")]
 dropdown = Dropdown(label="Hallway Metrics", type="warning", menu=dropdown_choices)
 
-tabs = Tabs(tabs=[tab1, tab2, tab3])
+tabs = Tabs(tabs=[Panel(child=p1, title="WH1"), Panel(child=p2, title="WH2"), Panel(child=p3, title="WH3")])
 layout = vform(dropdown, tabs)
 
 # show the results
