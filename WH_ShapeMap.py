@@ -1,5 +1,5 @@
 from bokeh.models import BoxSelectTool, BoxZoomTool, LassoSelectTool, HoverTool, Quad
-from bokeh.plotting import figure, output_file, show, gridplot, ColumnDataSource, output_server
+from bokeh.plotting import figure, output_file, show, gridplot, ColumnDataSource, output_server, hplot
 from bokeh.models.widgets import Dropdown, Panel, Tabs, CheckboxButtonGroup, RadioGroup
 from bokeh.io import output_file, show, vform, save
 import csv
@@ -9,7 +9,7 @@ import csv
 #(If we hear back from STAR, we'll also have data on how people move from year to year, which will be awesome to implement)
 
 #PROGRESS:
-#currently outputs to an html file which has 3 tabs - WH1, WH2, and WH3
+#currently outputs to an html file which has 4 tabs displaying 3 floors of WH with data from freshmen 
 #rooms are currently blue squares, have hover functionality with correct labels but no data
 #rooms are 1 unit squares with an x position between 0 and 11 and a y position between 1 and 13.
 #Also have buttons that are currently nonfunctional but are planned to be able to display different color coordinations for each room.
@@ -19,10 +19,7 @@ import csv
 #Get more room data from people (keep collecting survey responses)
 #Make import for roommate names work correctly
 #Make hover display given room number and inhabitant names instead of '???'
-#Make buttons functional
-	#figure out how to make buttons active
-	#make metric for color changing and coordination
-	#bokeh server things
+
 
 
 # output to static HTML file
@@ -45,7 +42,7 @@ class Room(object):
 		return 'Room Number: %s / Current Inhabitants: %s / Gender: %s / Average Bedtime: %s' %(self.roomNum, self.roommates, self.gender, self.bedtime)
 
 	def findCoordinates(self): #defines positions for rooms
-		coordinates = [1,0,0,1] #default
+		coordinates = [1,0,0,1] #top, bottom, left, right (respectively)
 		mod = int(self.roomNum)%100 #can do all floors at once
 		if mod<18:
 			if mod%2==1:
@@ -113,80 +110,272 @@ class Room(object):
 				coordinates[1] = 1
 		return coordinates
 
+	def findColors(self):
+		colors = [0,0,0,0]#gender, bedtime, light sleeper, hallway time (respectively)
+
+		#gender
+		if self.gender=='Male':
+			colors[0] = '#663399'
+		elif self.gender=='Female':
+			colors[0] = '#FE5B35'
+		else: colors[0] = '#87CEEB'
+
+		#bedtime
+		bedColors =	{'11':'#E9E7F1','11.5':'#D4D0E4','12':'#BEB8D7','12.5':'#A9A1C9','1':'#9489BC','1.5':'#7E72AF','2':'#695AA1','2.5':'#534294','3':'#3E2B87'}
+		colors[1] = bedColors.get(self.bedtime, 'firebrick')
+
+		#light sleeper
+		lightsleepcolors = {'1':'#00B34D','1.5':'#00A145','2':'#OO8F3D','2.5':'#OO7D35','3':'006B2E'}
+		colors[2] = lightsleepcolors.get(self.lightsleep,'firebrick')
+
+		#hallway time
+		hallwaycolors = {'1':'CEF1FO','1.5':'B6EBE9','2':'9EE4E2','2.5':'86DEDB','3':'6DD7D3','3.5':'55D0CC','4':'3DCAC5','4.5':'25CBE','5':'0DBDB7'}
+		colors[3] = hallwaycolors.get(self.halltime,'firebrick')
+		return colors
+
 	def drawRoom(self): #Now with Olin colors! heyyyyyyyyyooooooo
 		if self.gender == 'N/A':
-			color='grey'
+			gendercolor='grey'
+			bedtimecolor='grey'
+			lightsleepcolor='grey'
+			halltimecolor='grey'
 			alpha = .3
 		else: 
-			color='navy'
+			gendercolor=self.gendercolor
+			bedtimecolor=self.bedtimecolor
+			lightsleepcolor=self.lightsleepcolor
+			halltimecolor=self.halltimecolor
 			alpha = 1.0
+
 		if int(self.roomNum)<200:
 			#draw on first floor
-			rooms1 = p1.quad(top=self.top,bottom=self.bottom, left=self.left, right=self.right,
+			rooms1a = a1.quad(top=self.top,bottom=self.bottom, left=self.left, right=self.right,
 								nonselection_fill_alpha=0.01,
-								fill_color=color,
+								fill_color=gendercolor,
 								alpha=alpha,
-								line_color=color,
+								line_color=gendercolor,
 								hover_alpha = .7,
-								hover_fill_color=color,
-								nonselection_fill_color=color,
-								nonselection_line_color=color,
+								hover_fill_color=gendercolor,
+								nonselection_fill_color=gendercolor,
+								nonselection_line_color=gendercolor,
 								nonselection_line_alpha=1.0,
-								selection_color=color,
+								selection_color=gendercolor,
 								selection_fill_alpha=.5)
-				
+			rooms1b = b1.quad(top=self.top,bottom=self.bottom, left=self.left, right=self.right,
+								nonselection_fill_alpha=0.01,
+								fill_color=gendercolor,
+								alpha=alpha,
+								line_color=gendercolor,
+								hover_alpha = .7,
+								hover_fill_color=gendercolor,
+								nonselection_fill_color=gendercolor,
+								nonselection_line_color=gendercolor,
+								nonselection_line_alpha=1.0,
+								selection_color=gendercolor,
+								selection_fill_alpha=.5)
+			rooms1c = c1.quad(top=self.top,bottom=self.bottom, left=self.left, right=self.right,
+								nonselection_fill_alpha=0.01,
+								fill_color=lightsleepcolor,
+								alpha=alpha,
+								line_color=lightsleepcolor,
+								hover_alpha = .7,
+								hover_fill_color=lightsleepcolor,
+								nonselection_fill_color=lightsleepcolor,
+								nonselection_line_color=lightsleepcolor,
+								nonselection_line_alpha=1.0,
+								selection_color=lightsleepcolor,
+								selection_fill_alpha=.5)
+			rooms1d = d1.quad(top=self.top,bottom=self.bottom, left=self.left, right=self.right,
+								nonselection_fill_alpha=0.01,
+								fill_color=halltimecolor,
+								alpha=alpha,
+								line_color=halltimecolor,
+								hover_alpha = .7,
+								hover_fill_color=halltimecolor,
+								nonselection_fill_color=halltimecolor,
+								nonselection_line_color=halltimecolor,
+								nonselection_line_alpha=1.0,
+								selection_color=halltimecolor,
+								selection_fill_alpha=.5)
+
 		elif int(self.roomNum)<300:
 			#draw on second floor
-			rooms2 = p2.quad(top=self.top,bottom=self.bottom, left=self.left, right=self.right,
+			rooms2a = a2.quad(top=self.top,bottom=self.bottom, left=self.left, right=self.right,
 								nonselection_fill_alpha=0.01,
-								fill_color=color,
+								fill_color=gendercolor,
 								alpha=alpha,
-								line_color=color,
-								hover_fill_color=color,
+								line_color=gendercolor,
 								hover_alpha = .7,
-								nonselection_fill_color=color,
-								nonselection_line_color=color,
+								hover_fill_color=gendercolor,
+								nonselection_fill_color=gendercolor,
+								nonselection_line_color=gendercolor,
 								nonselection_line_alpha=1.0,
-								selection_color=color,
+								selection_color=gendercolor,
+								selection_fill_alpha=.5)
+			rooms2b = b2.quad(top=self.top,bottom=self.bottom, left=self.left, right=self.right,
+								nonselection_fill_alpha=0.01,
+								fill_color=bedtimecolor,
+								alpha=alpha,
+								line_color=bedtimecolor,
+								hover_alpha = .7,
+								hover_fill_color=bedtimecolor,
+								nonselection_fill_color=bedtimecolor,
+								nonselection_line_color=bedtimecolor,
+								nonselection_line_alpha=1.0,
+								selection_color=bedtimecolor,
+								selection_fill_alpha=.5)
+			rooms2c = c2.quad(top=self.top,bottom=self.bottom, left=self.left, right=self.right,
+								nonselection_fill_alpha=0.01,
+								fill_color=lightsleepcolor,
+								alpha=alpha,
+								line_color=lightsleepcolor,
+								hover_alpha = .7,
+								hover_fill_color=lightsleepcolor,
+								nonselection_fill_color=lightsleepcolor,
+								nonselection_line_color=lightsleepcolor,
+								nonselection_line_alpha=1.0,
+								selection_color=lightsleepcolor,
+								selection_fill_alpha=.5)
+			rooms2d = d2.quad(top=self.top,bottom=self.bottom, left=self.left, right=self.right,
+								nonselection_fill_alpha=0.01,
+								fill_color=halltimecolor,
+								alpha=alpha,
+								line_color=halltimecolor,
+								hover_alpha = .7,
+								hover_fill_color=halltimecolor,
+								nonselection_fill_color=halltimecolor,
+								nonselection_line_color=halltimecolor,
+								nonselection_line_alpha=1.0,
+								selection_color=halltimecolor,
 								selection_fill_alpha=.5)
 		else:
 			#draw on third floor
-			rooms3 = p3.quad(top=self.top,bottom=self.bottom, left=self.left, right=self.right,
+			rooms3a = a3.quad(top=self.top,bottom=self.bottom, left=self.left, right=self.right,
 								nonselection_fill_alpha=0.01,
-								fill_color=color,
+								fill_color=gendercolor,
 								alpha=alpha,
-								line_color=color,
+								line_color=gendercolor,
 								hover_alpha = .7,
-								hover_fill_color=color,
-								nonselection_fill_color=color,
-								nonselection_line_color=color,
+								hover_fill_color=gendercolor,
+								nonselection_fill_color=gendercolor,
+								nonselection_line_color=gendercolor,
 								nonselection_line_alpha=1.0,
-								selection_color=color,
+								selection_color=gendercolor,
+								selection_fill_alpha=.5)
+			rooms3b = b3.quad(top=self.top,bottom=self.bottom, left=self.left, right=self.right,
+								nonselection_fill_alpha=0.01,
+								fill_color=bedtimecolor,
+								alpha=alpha,
+								line_color=bedtimecolor,
+								hover_alpha = .7,
+								hover_fill_color=bedtimecolor,
+								nonselection_fill_color=bedtimecolor,
+								nonselection_line_color=bedtimecolor,
+								nonselection_line_alpha=1.0,
+								selection_color=bedtimecolor,
+								selection_fill_alpha=.5)
+			rooms3c = c3.quad(top=self.top,bottom=self.bottom, left=self.left, right=self.right,
+								nonselection_fill_alpha=0.01,
+								fill_color=lightsleepcolor,
+								alpha=alpha,
+								line_color=lightsleepcolor,
+								hover_alpha = .7,
+								hover_fill_color=lightsleepcolor,
+								nonselection_fill_color=lightsleepcolor,
+								nonselection_line_color=lightsleepcolor,
+								nonselection_line_alpha=1.0,
+								selection_color=lightsleepcolor,
+								selection_fill_alpha=.5)
+			rooms3d = d3.quad(top=self.top,bottom=self.bottom, left=self.left, right=self.right,
+								nonselection_fill_alpha=0.01,
+								fill_color=halltimecolor,
+								alpha=alpha,
+								line_color=halltimecolor,
+								hover_alpha = .7,
+								hover_fill_color=halltimecolor,
+								nonselection_fill_color=halltimecolor,
+								nonselection_line_color=halltimecolor,
+								nonselection_line_alpha=1.0,
+								selection_color=halltimecolor,
 								selection_fill_alpha=.5)
 
 TOOLS = "box_zoom,box_select,resize,reset,hover,tap"
 
+#GENDER 
 #draws first floor of WH
-p1 = figure(plot_width=400, plot_height=400, tools=TOOLS,title="West Hall First Floor")
-
-p1.segment(x0=[0, 4, 4, 7, 7, 11, 11, 7, 7, 4, 4, 0], y0=[13, 13, 12, 12, 13, 13, 10, 10, 1, 1, 10, 10], 
-		  x1=[4, 4, 7, 7, 11, 11, 7, 7, 4, 4, 0, 0], y1=[13, 12, 12, 13, 13, 10, 10, 1, 1, 10, 10, 13], color="green", line_width=3)
-p1.select_one(HoverTool).tooltips = [('Room Number','@roomNum'),('Inhabitants','@roommates')]
-
+a1 = figure(plot_width=400, plot_height=400, tools=TOOLS,title="West Hall First Floor")
+a1.segment(x0=[0, 4, 4, 7, 7, 11, 11, 7, 7, 4, 4, 0], y0=[13, 13, 12, 12, 13, 13, 10, 10, 1, 1, 10, 10], 
+		  x1=[4, 4, 7, 7, 11, 11, 7, 7, 4, 4, 0, 0], y1=[13, 12, 12, 13, 13, 10, 10, 1, 1, 10, 10, 13], color="#F4A582", line_width=3)
+a1.select_one(HoverTool).tooltips = [('Room Number','@roomNum'),('Inhabitants','@roommates')]
 #draws second floor of WH
-p2 = figure(plot_width=400, plot_height=400, tools=TOOLS,title="West Hall Second Floor")
-
-p2.segment(x0=[0, 4, 4, 7, 7, 11, 11, 7, 7, 4, 4, 0], y0=[13, 13, 12, 12, 13, 13, 10, 10, 1, 1, 10, 10], 
+a2 = figure(plot_width=400, plot_height=400, tools=TOOLS,title="West Hall Second Floor")
+a2.segment(x0=[0, 4, 4, 7, 7, 11, 11, 7, 7, 4, 4, 0], y0=[13, 13, 12, 12, 13, 13, 10, 10, 1, 1, 10, 10], 
 		  x1=[4, 4, 7, 7, 11, 11, 7, 7, 4, 4, 0, 0], y1=[13, 12, 12, 13, 13, 10, 10, 1, 1, 10, 10, 13], color="#F4A582", line_width=3)
-p2.select_one(HoverTool).tooltips = [('Room Number','@roomNum'),('Inhabitants','@roommates')]
-
+a2.select_one(HoverTool).tooltips = [('Room Number','@roomNum'),('Inhabitants','@roommates')]
 #draws third floor of WH
-p3 = figure(plot_width=400, plot_height=400, tools=TOOLS,title="West Hall Third Floor")
-
-p3.segment(x0=[0, 4, 4, 7, 7, 11, 11, 7, 7, 4, 4, 0], y0=[13, 13, 12, 12, 13, 13, 10, 10, 1, 1, 10, 10], 
+a3 = figure(plot_width=400, plot_height=400, tools=TOOLS,title="West Hall Third Floor")
+a3.segment(x0=[0, 4, 4, 7, 7, 11, 11, 7, 7, 4, 4, 0], y0=[13, 13, 12, 12, 13, 13, 10, 10, 1, 1, 10, 10], 
 		  x1=[4, 4, 7, 7, 11, 11, 7, 7, 4, 4, 0, 0], y1=[13, 12, 12, 13, 13, 10, 10, 1, 1, 10, 10, 13], color="#F4A582", line_width=3)
-p3.select_one(HoverTool).tooltips = [('Room Number','@roomNum'),('Inhabitants','@roommates')]
+a3.select_one(HoverTool).tooltips = [('Room Number','@roomNum'),('Inhabitants','@roommates')]
 
+a = hplot(a1, a2, a3)
+
+#BEDTIME
+#draws first floor of WH
+b1 = figure(plot_width=400, plot_height=400, tools=TOOLS,title="West Hall First Floor")
+b1.segment(x0=[0, 4, 4, 7, 7, 11, 11, 7, 7, 4, 4, 0], y0=[13, 13, 12, 12, 13, 13, 10, 10, 1, 1, 10, 10], 
+		  x1=[4, 4, 7, 7, 11, 11, 7, 7, 4, 4, 0, 0], y1=[13, 12, 12, 13, 13, 10, 10, 1, 1, 10, 10, 13], color="#F4A582", line_width=3)
+b1.select_one(HoverTool).tooltips = [('Room Number','@roomNum'),('Inhabitants','@roommates')]
+#draws second floor of WH
+b2 = figure(plot_width=400, plot_height=400, tools=TOOLS,title="West Hall Second Floor")
+b2.segment(x0=[0, 4, 4, 7, 7, 11, 11, 7, 7, 4, 4, 0], y0=[13, 13, 12, 12, 13, 13, 10, 10, 1, 1, 10, 10], 
+		  x1=[4, 4, 7, 7, 11, 11, 7, 7, 4, 4, 0, 0], y1=[13, 12, 12, 13, 13, 10, 10, 1, 1, 10, 10, 13], color="#F4A582", line_width=3)
+b2.select_one(HoverTool).tooltips = [('Room Number','@roomNum'),('Inhabitants','@roommates')]
+#draws third floor of WH
+b3 = figure(plot_width=400, plot_height=400, tools=TOOLS,title="West Hall Third Floor")
+b3.segment(x0=[0, 4, 4, 7, 7, 11, 11, 7, 7, 4, 4, 0], y0=[13, 13, 12, 12, 13, 13, 10, 10, 1, 1, 10, 10], 
+		  x1=[4, 4, 7, 7, 11, 11, 7, 7, 4, 4, 0, 0], y1=[13, 12, 12, 13, 13, 10, 10, 1, 1, 10, 10, 13], color="#F4A582", line_width=3)
+b3.select_one(HoverTool).tooltips = [('Room Number','@roomNum'),('Inhabitants','@roommates')]
+
+b = hplot(b1, b2, b3)
+
+#LIGHT SLEEPER
+#draws first floor of WH
+c1 = figure(plot_width=400, plot_height=400, tools=TOOLS,title="West Hall First Floor")
+c1.segment(x0=[0, 4, 4, 7, 7, 11, 11, 7, 7, 4, 4, 0], y0=[13, 13, 12, 12, 13, 13, 10, 10, 1, 1, 10, 10], 
+		  x1=[4, 4, 7, 7, 11, 11, 7, 7, 4, 4, 0, 0], y1=[13, 12, 12, 13, 13, 10, 10, 1, 1, 10, 10, 13], color="#F4A582", line_width=3)
+c1.select_one(HoverTool).tooltips = [('Room Number','@roomNum'),('Inhabitants','@roommates')]
+#draws second floor of WH
+c2 = figure(plot_width=400, plot_height=400, tools=TOOLS,title="West Hall Second Floor")
+c2.segment(x0=[0, 4, 4, 7, 7, 11, 11, 7, 7, 4, 4, 0], y0=[13, 13, 12, 12, 13, 13, 10, 10, 1, 1, 10, 10], 
+		  x1=[4, 4, 7, 7, 11, 11, 7, 7, 4, 4, 0, 0], y1=[13, 12, 12, 13, 13, 10, 10, 1, 1, 10, 10, 13], color="#F4A582", line_width=3)
+c2.select_one(HoverTool).tooltips = [('Room Number','@roomNum'),('Inhabitants','@roommates')]
+#draws third floor of WH
+c3 = figure(plot_width=400, plot_height=400, tools=TOOLS,title="West Hall Third Floor")
+c3.segment(x0=[0, 4, 4, 7, 7, 11, 11, 7, 7, 4, 4, 0], y0=[13, 13, 12, 12, 13, 13, 10, 10, 1, 1, 10, 10], 
+		  x1=[4, 4, 7, 7, 11, 11, 7, 7, 4, 4, 0, 0], y1=[13, 12, 12, 13, 13, 10, 10, 1, 1, 10, 10, 13], color="#F4A582", line_width=3)
+c3.select_one(HoverTool).tooltips = [('Room Number','@roomNum'),('Inhabitants','@roommates')]
+
+c = hplot(c1, c2, c3)
+
+#HALLWAY TIME
+#draws first floor of WH
+d1 = figure(plot_width=400, plot_height=400, tools=TOOLS,title="West Hall First Floor")
+d1.segment(x0=[0, 4, 4, 7, 7, 11, 11, 7, 7, 4, 4, 0], y0=[13, 13, 12, 12, 13, 13, 10, 10, 1, 1, 10, 10], 
+		  x1=[4, 4, 7, 7, 11, 11, 7, 7, 4, 4, 0, 0], y1=[13, 12, 12, 13, 13, 10, 10, 1, 1, 10, 10, 13], color="#F4A582", line_width=3)
+d1.select_one(HoverTool).tooltips = [('Room Number','@roomNum'),('Inhabitants','@roommates')]
+#draws second floor of WH
+d2 = figure(plot_width=400, plot_height=400, tools=TOOLS,title="West Hall Second Floor")
+d2.segment(x0=[0, 4, 4, 7, 7, 11, 11, 7, 7, 4, 4, 0], y0=[13, 13, 12, 12, 13, 13, 10, 10, 1, 1, 10, 10], 
+		  x1=[4, 4, 7, 7, 11, 11, 7, 7, 4, 4, 0, 0], y1=[13, 12, 12, 13, 13, 10, 10, 1, 1, 10, 10, 13], color="#F4A582", line_width=3)
+d2.select_one(HoverTool).tooltips = [('Room Number','@roomNum'),('Inhabitants','@roommates')]
+#draws third floor of WH
+d3 = figure(plot_width=400, plot_height=400, tools=TOOLS,title="West Hall Third Floor")
+d3.segment(x0=[0, 4, 4, 7, 7, 11, 11, 7, 7, 4, 4, 0], y0=[13, 13, 12, 12, 13, 13, 10, 10, 1, 1, 10, 10], 
+		  x1=[4, 4, 7, 7, 11, 11, 7, 7, 4, 4, 0, 0], y1=[13, 12, 12, 13, 13, 10, 10, 1, 1, 10, 10, 13], color="#F4A582", line_width=3)
+d3.select_one(HoverTool).tooltips = [('Room Number','@roomNum'),('Inhabitants','@roommates')]
+
+d = hplot(d1, d2, d3)
 
 #Pull data from csv file and create Room objects from it!
 with open('WH_Freshmen.csv') as csvfile:
@@ -197,25 +386,26 @@ with open('WH_Freshmen.csv') as csvfile:
 		roomA.roomNum = row[0]
 		roomA.roomates = row[1] #not working for some reason?
 		roomA.gender = row[2]
-		roomA.gendercolor = "green"
 		roomA.bedtime = row[3]
-		roomA.bedtimecolor = "yellow"
 		roomA.lightsleep = row[4]
 		roomA.halltime = row[5]
+
+		colors = roomA.findColors()
+		roomA.gendercolor = colors[0]
+		roomA.bedtimecolor = colors[1]
+		roomA.lightsleepcolor = colors[2]
+		roomA.halltimecolor = colors[3]
+
 		coordinates = roomA.findCoordinates()
 		roomA.top = coordinates[0]
 		roomA.bottom = coordinates[1]
 		roomA.left = coordinates[2]
 		roomA.right = coordinates[3]
 		roomA.drawRoom()
+
 		#roomList.append(roomA) #creates list of all Room objects
 
-dropdown_choices = [("Gender", "gender"), ("Bedtime", "bedtime"), ("Light Sleeper", "lightsleep"), ("Time in Hallway", "halltime")]
-dropdown = Dropdown(label="Hallway Metrics", type="warning", menu=dropdown_choices)
-
-tabs = Tabs(tabs=[Panel(child=p1, title="WH1"), Panel(child=p2, title="WH2"), Panel(child=p3, title="WH3")])
-layout = vform(dropdown, tabs)
+tabs = Tabs(tabs=[Panel(child=a, title="Gender"), Panel(child=b, title="Bedtime"), Panel(child=c, title="Heaviness of Sleep"), Panel(child=d, title="Time Spent In Hallway")])
 
 # show the results
-save(tabs)
-show(layout)
+show(tabs)
